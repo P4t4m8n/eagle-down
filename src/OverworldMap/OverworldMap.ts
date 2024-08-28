@@ -1,13 +1,7 @@
-import GameObject from "./GameObject/GameObject";
-import { IGameObject } from "./GameObject/GameObject.model";
-import Person from "./Person/Person";
-import { utilService } from "./uti.service";
-
-interface IOverworldMapConfig {
-  gameObjects: Record<string, IGameObject>;
-  lowerSrc: string;
-  upperSrc: string;
-}
+import { IGameObject } from "../GameObject/GameObject.model";
+import Person from "../Person/Person";
+import { utilService } from "../uti.service";
+import { IOverworldMapConfig } from "./OverworldMap.model";
 
 export interface IOverworldMap {
   gameObjects: Record<string, IGameObject>;
@@ -40,17 +34,6 @@ export default class OverworldMap {
   }
 }
 
-interface IRoom {
-  lowerSrc: string;
-  upperSrc: string;
-  gameObjects: Record<string, IGameObject>;
-}
-declare global {
-  interface Window {
-    OverworldMaps: Record<"DemoRooms" | "Kitchen", IRoom>;
-  }
-}
-
 window.OverworldMaps = {
   DemoRooms: {
     lowerSrc: "/images/maps/DemoLower.png",
@@ -73,19 +56,20 @@ window.OverworldMaps = {
     lowerSrc: "/images/maps/KitchenLower.png",
     upperSrc: "/images/maps/KitchenUpper.png",
     gameObjects: {
-      hero: new GameObject({
-        x: 2,
-        y: 6,
+      hero: new Person({
+        x: utilService.withGrid(2),
+        y: utilService.withGrid(6),
         src: "/images/characters/people/hero.png",
+        isPlayerControlled: true,
       }),
-      npc1: new GameObject({
-        x: 9,
-        y: 6,
+      npc1: new Person({
+        x: utilService.withGrid(9),
+        y: utilService.withGrid(6),
         src: "/images/characters/people/npc1.png",
       }),
-      npc2: new GameObject({
-        x: 7,
-        y: 6,
+      npc2: new Person({
+        x: utilService.withGrid(7),
+        y: utilService.withGrid(6),
         src: "/images/characters/people/npc2.png",
       }),
     },

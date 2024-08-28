@@ -1,10 +1,7 @@
-import DirectionInput from "./DirectionInput/DirectionInput";
-import { IDirectionInput } from "./DirectionInput/DirectionInput.model";
-import OverworldMap, { IOverworldMap } from "./OverworldMap";
-
-interface OverworldConfig {
-  element: HTMLDivElement | null;
-}
+import DirectionInput from "../DirectionInput/DirectionInput";
+import { IDirectionInput } from "../DirectionInput/DirectionInput.model";
+import OverworldMap, { IOverworldMap } from "../OverworldMap/OverworldMap";
+import { IOverworldConfig } from "./Overworld.model";
 
 export default class Overworld {
   element: HTMLDivElement | null;
@@ -12,7 +9,7 @@ export default class Overworld {
   ctx: CanvasRenderingContext2D | null | undefined;
   map: IOverworldMap | null;
   directionInput: IDirectionInput | null = null;
-  constructor(config: OverworldConfig) {
+  constructor(config: IOverworldConfig) {
     this.element = config.element;
     this.canvas = this.element?.querySelector(".game-canvas");
     this.ctx = this.canvas?.getContext("2d");
