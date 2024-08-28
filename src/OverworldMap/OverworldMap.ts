@@ -45,11 +45,11 @@ window.OverworldMaps = {
         src: "/images/characters/people/hero.png",
         isPlayerControlled: true,
       }),
-      npc1: new Person({
-        x: utilService.withGrid(9),
-        y: utilService.withGrid(6),
-        src: "/images/characters/people/npc1.png",
-      }),
+      // npc1: new Person({
+      //   x: utilService.withGrid(9),
+      //   y: utilService.withGrid(6),
+      //   src: "/images/characters/people/npc1.png",
+      // }),
     },
   },
   Kitchen: {

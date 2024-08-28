@@ -1,28 +1,27 @@
 import { IGameObject } from "../GameObject/GameObject.model";
 
-export type TAnimation = "idleDown";
+export type TAnimation =
+  | "idle-down"
+  | "idle-right"
+  | "idle-up"
+  | "idle-left"
+  | "walk-down"
+  | "walk-right"
+  | "walk-up"
+  | "walk-left";
 
 export interface ISpriteConfig {
+  animationFrameLimit: number;
   useShadow: boolean;
   gameObject: IGameObject;
   src: string;
-  animations?: {
-    idleDown: number[][];
-  };
+  animations?: Record<TAnimation, number[][]>;
   currentAnimation?: TAnimation;
 }
 
 export interface ISprite {
-  animations: {
-    idleDown: number[][];
-  };
-  currentAnimation: TAnimation;
-  currentAnimationFrame: number;
-  img: HTMLImageElement;
-  isLoaded: boolean;
-  gameObject: IGameObject;
-  shadow: HTMLImageElement;
-  isShadowLoaded: boolean;
-  useShadow: boolean;
   draw: Function;
+  frame: number[];
+  updateAnimationProgress: Function;
+  animation: TAnimation;
 }
