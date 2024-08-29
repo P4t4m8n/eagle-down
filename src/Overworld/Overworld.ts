@@ -1,5 +1,6 @@
 import DirectionInput from "../DirectionInput/DirectionInput";
 import OverworldMap from "../OverworldMap/OverworldMap";
+import Person from "../Person/Person";
 import { IOverworldConfig } from "./Overworld.model";
 
 export default class Overworld {
@@ -34,10 +35,12 @@ export default class Overworld {
 
       //Update all objects
       Object.values(this.map?.gameObjects!).forEach((gameObject) => {
-        gameObject.update({
-          arrow: this.directionInput?.direction,
-          map: this.map,
-        });
+        if (gameObject instanceof Person) {
+          gameObject.update({
+            arrow: this.directionInput?.direction,
+            map: this.map!,
+          });
+        }
       });
 
       this.map?.drawLowerImg(this.ctx!, cameraPerson!);

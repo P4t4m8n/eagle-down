@@ -1,12 +1,11 @@
 import { TDirection } from "../DirectionInput/DirectionInput.model";
 import GameObject from "../GameObject/GameObject";
-import { IGameObject } from "../GameObject/GameObject.model";
 import Person from "../Person/Person";
 import { utilService } from "../uti.service";
 import { IOverworldMapConfig } from "./OverworldMap.model";
 
 export default class OverworldMap {
-  gameObjects: Record<string, IGameObject>;
+  gameObjects: Record<string, GameObject>;
   lowerImg: HTMLImageElement;
   upperImg: HTMLImageElement;
   walls: Record<string, boolean>;
@@ -23,7 +22,7 @@ export default class OverworldMap {
     this.walls = config.walls || {};
   }
 
-  drawLowerImg(ctx: CanvasRenderingContext2D, cameraPerson: IGameObject) {
+  drawLowerImg(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
     ctx.drawImage(
       this.lowerImg,
       utilService.withGrid(10.5) - cameraPerson.x,
@@ -31,7 +30,7 @@ export default class OverworldMap {
     );
   }
 
-  drawUpperImg(ctx: CanvasRenderingContext2D, cameraPerson: IGameObject) {
+  drawUpperImg(ctx: CanvasRenderingContext2D, cameraPerson: GameObject) {
     ctx.drawImage(
       this.upperImg,
       utilService.withGrid(10.5) - cameraPerson.x,

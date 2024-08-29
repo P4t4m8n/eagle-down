@@ -1,5 +1,4 @@
 import { TDirection } from "../DirectionInput/DirectionInput.model";
-import { ISprite } from "../Sprite/Sprite.model";
 
 export interface IGameObjectConfig {
   direction?: TDirection;
@@ -8,11 +7,4 @@ export interface IGameObjectConfig {
   src: string;
 }
 
-export interface IGameObject {
-  x: number;
-  y: number;
-  sprite: ISprite;
-  update: Function;
-  direction: TDirection;
-  mount: Function;
-}
+

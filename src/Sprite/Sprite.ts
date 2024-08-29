@@ -1,4 +1,4 @@
-import { IGameObject } from "../GameObject/GameObject.model";
+import GameObject from "../GameObject/GameObject";
 import { utilService } from "../uti.service";
 import { ISpriteConfig, TAnimation } from "./Sprite.model";
 
@@ -9,7 +9,7 @@ export default class Sprite {
   currentAnimationFrame: number;
   img: HTMLImageElement;
   isLoaded: boolean = false;
-  gameObject: IGameObject;
+  gameObject: GameObject;
   shadow: HTMLImageElement;
   isShadowLoaded: boolean = false;
   useShadow: boolean;
@@ -104,7 +104,7 @@ export default class Sprite {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D, cameraPerson?: IGameObject) {
+  draw(ctx: CanvasRenderingContext2D, cameraPerson?: GameObject) {
     const x = this.gameObject.x - 8 + utilService.withGrid(10.5) - (cameraPerson?.x || 0)
     const y = this.gameObject.y - 18 + utilService.withGrid(6) - (cameraPerson?.y || 0)
 

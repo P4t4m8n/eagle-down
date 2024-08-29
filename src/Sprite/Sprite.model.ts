@@ -1,4 +1,4 @@
-import { IGameObject } from "../GameObject/GameObject.model";
+import GameObject from "../GameObject/GameObject";
 
 export type TAnimation =
   | "idle-down"
@@ -13,15 +13,9 @@ export type TAnimation =
 export interface ISpriteConfig {
   animationFrameLimit: number;
   useShadow: boolean;
-  gameObject: IGameObject;
+  gameObject: GameObject;
   src: string;
   animations?: Record<TAnimation, number[][]>;
   currentAnimation?: TAnimation;
 }
 
-export interface ISprite {
-  draw: Function;
-  frame: number[];
-  updateAnimationProgress: Function;
-  animation: TAnimation;
-}
