@@ -14,4 +14,5 @@ export interface IGameObject {
   sprite: ISprite;
   update: Function;
   direction: TDirection;
+  mount: Function;
 }

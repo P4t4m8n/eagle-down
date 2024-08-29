@@ -1,6 +1,6 @@
 import { TDirection } from "../DirectionInput/DirectionInput.model";
 import GameObject from "../GameObject/GameObject";
-import { IPersonConfig, IPersonState } from "./Person.model";
+import { IBehaver, IPersonConfig, IPersonState } from "./Person.model";
 
 export default class Person extends GameObject {
   movingProgressRemaining: number;
@@ -22,18 +22,34 @@ export default class Person extends GameObject {
   }
 
   update(state?: IPersonState) {
-    this.updatePosition();
-    this.updateSprite(state);
+    if (this.movingProgressRemaining > 0) {
+      this.updatePosition();
+    } else {
+      //TODO More cased for starting to walk
 
-    if (
-      this.movingProgressRemaining > 0 ||
-      !state?.arrow ||
-      !this.isPlayerControlled
-    ) {
-      return;
+      //Case:Keyboard ready and have arrow pressed
+      if (state?.arrow && this.isPlayerControlled) {
+        this.startBehavior(state, {
+          type: "walk",
+          direction: state.arrow,
+        });
+      }
+      this.updateSprite();
     }
-    this.direction = state.arrow;
-    this.movingProgressRemaining = 16;
+  }
+
+  startBehavior(state: IPersonState, behavior: IBehaver) {
+    //Set character direction to whatever behaver has
+    this.direction = behavior.direction;
+    if (behavior.type === "walk") {
+      //Stop here if space is not free
+      if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+        return;
+      }
+      //Keep moving
+      state.map.moveWall(this.x, this.y, this.direction);
+      this.movingProgressRemaining = 16;
+    }
   }
 
   updatePosition() {
@@ -44,19 +60,12 @@ export default class Person extends GameObject {
     }
   }
 
-  updateSprite(state?: IPersonState) {
-    if (!state) return;
-
-    if (
-      this.isPlayerControlled &&
-      !this.movingProgressRemaining &&
-      !state?.arrow
-    ) {
-      this.sprite.animation = `idle-${this.direction}`;
+  updateSprite() {
+    if (this.movingProgressRemaining) {
+      this.sprite.animation = `walk-${this.direction}`;
       return;
     }
-    if (this.movingProgressRemaining > 0) {
-      this.sprite.animation = `walk-${this.direction}`;
-    }
+
+    this.sprite.animation = `idle-${this.direction}`;
   }
 }

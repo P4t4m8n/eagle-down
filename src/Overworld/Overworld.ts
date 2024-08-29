@@ -1,14 +1,13 @@
 import DirectionInput from "../DirectionInput/DirectionInput";
-import { IDirectionInput } from "../DirectionInput/DirectionInput.model";
-import OverworldMap, { IOverworldMap } from "../OverworldMap/OverworldMap";
+import OverworldMap from "../OverworldMap/OverworldMap";
 import { IOverworldConfig } from "./Overworld.model";
 
 export default class Overworld {
   element: HTMLDivElement | null;
   canvas: HTMLCanvasElement | null | undefined;
   ctx: CanvasRenderingContext2D | null | undefined;
-  map: IOverworldMap | null;
-  directionInput: IDirectionInput | null = null;
+  map: OverworldMap | null;
+  directionInput: DirectionInput | null = null;
   constructor(config: IOverworldConfig) {
     this.element = config.element;
     this.canvas = this.element?.querySelector(".game-canvas");
@@ -17,15 +16,11 @@ export default class Overworld {
   }
 
   init() {
-    this.map = new OverworldMap(window.OverworldMaps.Kitchen);
+    this.map = new OverworldMap(window.OverworldMaps.DemoRooms);
+    this.map.mountObjects();
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();
-    this.directionInput.direction;
-    console.log(
-      "this.directionInput.direction:",
-      this.directionInput.direction
-    );
 
     this.startGameLoop();
   }
@@ -41,6 +36,7 @@ export default class Overworld {
       Object.values(this.map?.gameObjects!).forEach((gameObject) => {
         gameObject.update({
           arrow: this.directionInput?.direction,
+          map: this.map,
         });
       });
 

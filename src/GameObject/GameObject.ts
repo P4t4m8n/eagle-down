@@ -1,4 +1,5 @@
 import { TDirection } from "../DirectionInput/DirectionInput.model";
+import OverworldMap from "../OverworldMap/OverworldMap";
 import Sprite from "../Sprite/Sprite";
 import { IGameObjectConfig } from "./GameObject.model";
 
@@ -7,7 +8,9 @@ export default class GameObject {
   x: number;
   sprite: Sprite;
   direction: TDirection;
+  isMounted: boolean;
   constructor(config: IGameObjectConfig) {
+    this.isMounted = false;
     this.x = config.x || 0;
     this.y = config.y || 0;
     this.direction = config.direction || "up";
@@ -15,9 +18,14 @@ export default class GameObject {
       gameObject: this,
       src: config.src || "/images/characters/people/hero.png",
       useShadow: true,
-      animationFrameLimit:16,
+      animationFrameLimit: 16,
     });
   }
 
+  mount(map: OverworldMap) {
+    console.log("mounting");
+    this.isMounted = true;
+    map.addWall(this.x, this.y);
+  }
   update() {}
 }
