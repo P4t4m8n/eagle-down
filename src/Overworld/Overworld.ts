@@ -17,7 +17,7 @@ export default class Overworld {
   }
 
   init() {
-    this.map = new OverworldMap(window.OverworldMaps.DemoRooms);
+    this.map = new OverworldMap(window.OverworldMaps.Kitchen);
 
     this.directionInput = new DirectionInput();
     this.directionInput.init();
@@ -34,17 +34,24 @@ export default class Overworld {
     const step = () => {
       this.ctx?.clearRect(0, 0, this.canvas?.width!, this.canvas?.height!);
 
-      this.map?.drawLowerImg(this.ctx!);
+      //Establish the camera person
+      const cameraPerson = this.map?.gameObjects.hero;
 
-      //Draw game objects
+      //Update all objects
       Object.values(this.map?.gameObjects!).forEach((gameObject) => {
         gameObject.update({
           arrow: this.directionInput?.direction,
         });
-        gameObject.sprite.draw(this.ctx!);
       });
 
-      this.map?.drawUpperImg(this.ctx!);
+      this.map?.drawLowerImg(this.ctx!, cameraPerson!);
+
+      //Draw game objects
+      Object.values(this.map?.gameObjects!).forEach((gameObject) => {
+        gameObject.sprite.draw(this.ctx!, cameraPerson);
+      });
+
+      this.map?.drawUpperImg(this.ctx!, cameraPerson!);
       requestAnimationFrame(() => {
         step();
       });

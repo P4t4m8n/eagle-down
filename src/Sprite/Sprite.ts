@@ -1,4 +1,5 @@
 import { IGameObject } from "../GameObject/GameObject.model";
+import { utilService } from "../uti.service";
 import { ISpriteConfig, TAnimation } from "./Sprite.model";
 
 export default class Sprite {
@@ -103,9 +104,9 @@ export default class Sprite {
     }
   }
 
-  draw(ctx: CanvasRenderingContext2D) {
-    const x = this.gameObject.x - 8;
-    const y = this.gameObject.y - 18;
+  draw(ctx: CanvasRenderingContext2D, cameraPerson?: IGameObject) {
+    const x = this.gameObject.x - 8 + utilService.withGrid(10.5) - (cameraPerson?.x || 0)
+    const y = this.gameObject.y - 18 + utilService.withGrid(6) - (cameraPerson?.y || 0)
 
     const [frameX, frameY] = this.frame;
 

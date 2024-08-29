@@ -7,8 +7,8 @@ export interface IOverworldMap {
   gameObjects: Record<string, IGameObject>;
   lowerImg: HTMLImageElement;
   upperImg: HTMLImageElement;
-  drawLowerImg(ctx: CanvasRenderingContext2D): void;
-  drawUpperImg(ctx: CanvasRenderingContext2D): void;
+  drawLowerImg(ctx: CanvasRenderingContext2D, cameraPerson: IGameObject): void;
+  drawUpperImg(ctx: CanvasRenderingContext2D, cameraPerson: IGameObject): void;
 }
 export default class OverworldMap {
   gameObjects: Record<string, IGameObject>;
@@ -25,12 +25,20 @@ export default class OverworldMap {
     this.upperImg.src = config.upperSrc;
   }
 
-  drawLowerImg(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.lowerImg, 0, 0);
+  drawLowerImg(ctx: CanvasRenderingContext2D, cameraPerson: IGameObject) {
+    ctx.drawImage(
+      this.lowerImg,
+      utilService.withGrid(10.5) - cameraPerson.x,
+      utilService.withGrid(6) - cameraPerson.y
+    );
   }
 
-  drawUpperImg(ctx: CanvasRenderingContext2D) {
-    ctx.drawImage(this.upperImg, 0, 0);
+  drawUpperImg(ctx: CanvasRenderingContext2D, cameraPerson: IGameObject) {
+    ctx.drawImage(
+      this.upperImg,
+      utilService.withGrid(10.5) - cameraPerson.x,
+      utilService.withGrid(6) - cameraPerson.y
+    );
   }
 }
 
