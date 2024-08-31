@@ -1,3 +1,4 @@
+import { IDetail, TCustomEvent } from "./app.model";
 import { TDirection } from "./DirectionInput/DirectionInput.model";
 
 const withGrid = (num: number): number => {
@@ -34,8 +35,30 @@ const nextPosition = (
   return { x, y };
 };
 
+const emitEvent = (name: TCustomEvent, detail: IDetail) => {
+  const event = new CustomEvent(name, {
+    detail,
+  });
+  document.dispatchEvent(event);
+};
+
+const oppositeDirection = (direction: TDirection): TDirection => {
+  switch (direction) {
+    case "up":
+      return "down";
+    case "down":
+      return "up";
+    case "left":
+      return "right";
+    case "right":
+      return "left";
+  }
+};
+
 export const utilService = {
   withGrid,
   asGridCoord,
   nextPosition,
+  emitEvent,
+  oppositeDirection,
 };

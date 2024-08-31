@@ -12,9 +12,11 @@ export interface IPersonState {
   map: OverworldMap;
 }
 
-export interface IBehaver{
+export interface IBehaver {
   type: TBehavior;
   direction: TDirection;
+  time?: number;
+  retry?: boolean;
 }
 
-export type TBehavior = "walk" | "idle";
+export type TBehavior = "walk" | "idle" | "stand" | "textMessage" | "changeMap";

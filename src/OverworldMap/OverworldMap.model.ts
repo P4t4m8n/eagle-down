@@ -1,10 +1,12 @@
 import GameObject from "../GameObject/GameObject";
+import { IBehaviorLoop } from "../GameObject/GameObject.model";
 
 export interface IRoom {
   lowerSrc: string;
   upperSrc: string;
   gameObjects: Record<string, GameObject>;
   walls: Record<string, boolean>;
+  cutsceneSpaces?: Record<string, { events: IBehaviorLoop[] }[]>;
 }
 declare global {
   interface Window {
@@ -17,4 +19,6 @@ export interface IOverworldMapConfig {
   gameObjects: Record<string, GameObject>;
   lowerSrc: string;
   upperSrc: string;
+  cutsceneSpaces?: Record<string, { events: IBehaviorLoop[] }[]>;
+
 }
