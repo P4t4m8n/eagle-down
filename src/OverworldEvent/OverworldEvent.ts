@@ -1,6 +1,7 @@
 import { ICustomEvent, IDetail } from "../app.model";
 import OverworldMap from "../OverworldMap/OverworldMap";
 import Person from "../Person/Person";
+import { SceneTransition } from "../SceneTransition/SceneTransition";
 import TextMessage from "../TextMessage/TextMessage";
 import { utilService } from "../uti.service";
 import { IEventConfig, IOverworldEventConfig } from "./OverworldEvent.model";
@@ -96,9 +97,13 @@ export default class OverworldEvent {
   }
 
   changeMap(resolve: Function) {
-    this.map?.overworld?.startMap(window?.OverworldMaps[this.event.map!]);
-    console.log("this.map?.overworld?:", this.map.overworld)
-    resolve();
+    const sceneTransition = new SceneTransition();
+    const elGameContainer = document.querySelector(".game-container");
+    sceneTransition.init(elGameContainer!, () => {
+      this.map?.overworld?.startMap(window?.OverworldMaps[this.event.map!]);
+      resolve();
+      sceneTransition.fadeOut();
+    });
   }
 
   init() {

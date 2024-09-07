@@ -55,10 +55,23 @@ const oppositeDirection = (direction: TDirection): TDirection => {
   }
 };
 
+const createElement = (
+  element: "span" | "div"
+): (() => HTMLSpanElement | HTMLDivElement) => {
+  return (): HTMLSpanElement | HTMLDivElement => {
+    return document.createElement(element);
+  };
+};
+
+const createSpan = createElement("span");
+const createDiv = createElement("div");
+
 export const utilService = {
   withGrid,
   asGridCoord,
   nextPosition,
   emitEvent,
   oppositeDirection,
+  createSpan,
+  createDiv,
 };

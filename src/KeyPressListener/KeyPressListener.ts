@@ -7,17 +7,14 @@ export default class KeyPressListener {
   constructor(keyCode: TKeyCode, callback: Function) {
     let keySafe = true;
     this.keydownFunction = function (event: KeyboardEvent) {
-      if (keySafe) {
-        if (event.code === keyCode) {
-          keySafe = false;
-          callback();
-        }
-      }
+      if (event.code !== keyCode || !keySafe) return;
+      keySafe = false;
+      callback();
     };
+
     this.keyupFunction = function (event: KeyboardEvent) {
-      if (event.code === keyCode) {
-        keySafe = true;
-      }
+      if (event.code !== keyCode) return;
+      keySafe = true;
     };
 
     document.addEventListener("keydown", this.keydownFunction);
